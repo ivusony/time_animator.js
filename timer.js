@@ -1,20 +1,38 @@
 (function($){
     DomReady.ready(function(){
+        //wait until resize is over, then calculate new middle
+        var resizeTimer; 
+        $(window).on('resize', function(){
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                let pos = $(window).height()/2;
+                ids.forEach(function(h1) {
+                    let div = $("#"+h1+"");
+                    div.animateToPosition(pos, 1000);
+                })
+            }, 100);    
+        })
 
-        animator.secondPositionCounter()
-        var ids = getIds();
        
-        //main function
+        var ids = getIds();
+        ids.forEach(function(h1) {
+            let div = $("#"+h1+"");
+            div.animateToPosition($(window).height()/2, 2500);
+        })
+        //counter and h1 updater interval function
         setInterval(function(){
             ids.forEach(function(id){
                 let div = $("#"+id+"");
-                div.html("<h1>"+events.string(id)+"</h1>");
+                let OldVal = $("#"+id+"").find('h1').text();
+                //pass values to update h1 only if conditions has been met
+                div.updateValue(OldVal , dateAndTime.value(id));
             })
         },1000)
         
+
         
-        var events = {
-            string: function(id){
+        var dateAndTime = {
+            value: function(id){
                let obj = getDateAndTime();
                return obj[id]
             }
@@ -39,7 +57,7 @@
                     year : "'"+yearToShort(stamp.getFullYear()),
                     hour : stringifyTime(stamp.getHours())+'h',
                     min : stringifyTime(stamp.getMinutes())+'m',
-                    sec : stringifyTime(stamp.getSeconds()+'s')
+                    sec : stringifyTime(stamp.getSeconds()) + 's'
                 }
                 function stringifyTime(num){
                     num = num.toString();
@@ -68,3 +86,5 @@
         }
     })//domready    
 })(jQuery)//iife
+
+
