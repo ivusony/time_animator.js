@@ -1,4 +1,4 @@
-(function($){
+const animator = (function($){
         
          //window object
          var win = {
@@ -10,14 +10,13 @@
                 $('.segment').find('h1').top();
             }
         }
-        //update window object on resize
-        $(window).on('resize', win.onResize.bind(win));
-
-        $.fn.top =  function(){
-            this.css({'margin-top':(win.h/2-100)});
-            return this;
+       
+        function secondPositionCounter(){
+            
         }
 
-        
+        return {
+            secondPositionCounter : secondPositionCounter
+        }
     
 })(jQuery)

@@ -1,6 +1,7 @@
 (function($){
     DomReady.ready(function(){
-       
+
+        animator.secondPositionCounter()
         var ids = getIds();
        
         //main function
@@ -16,15 +17,12 @@
             string: function(id){
                let obj = getDateAndTime();
                return obj[id]
-            },
-            position: function(id){
-
             }
         }
         //gett ids from divs
         function getIds(){
             let idArr = [];
-            let objArr = document.querySelectorAll('div.segment');
+            let objArr = document.querySelectorAll('div.h1container');
             objArr.forEach(function(div){
                 idArr.push(div.getAttribute('id'))
             })
@@ -38,17 +36,17 @@
                     day: stringifyDay(stamp.getDay()),
                     date : dateOrdial(stamp.getDate()),
                     month : stringifyMonth(stamp.getMonth()),
-                    year : stamp.getFullYear(),
-                    hour : stringifyTime(stamp.getHours()),
-                    min : stringifyTime(stamp.getMinutes()),
-                    sec : stringifyTime(stamp.getSeconds())
+                    year : "'"+yearToShort(stamp.getFullYear()),
+                    hour : stringifyTime(stamp.getHours())+'h',
+                    min : stringifyTime(stamp.getMinutes())+'m',
+                    sec : stringifyTime(stamp.getSeconds()+'s')
                 }
                 function stringifyTime(num){
                     num = num.toString();
                     return num.length<2 ? '0'+num : num
                 }
                 function stringifyDay(indexOfDay){
-                    let dayArray = ['Sunday', 'Monday' ,'Tuesday','Wednesday','Thursday','Friday','Saturday'];
+                    let dayArray = ['Sun', 'Mon' ,'Tue','Wed','Thu','Fri','Sat'];
                     return dayArray[indexOfDay]
                 }
                 function dateOrdial(date){
@@ -58,9 +56,12 @@
                             date+'th'
                 }
                 function stringifyMonth(indexOfMonth){
-                    let monthArray = ['December', 'January', 'February', 'March', 'April', 'May', 
-                                    'Jun', 'July', 'August', 'September', 'October', 'November'];
+                    let monthArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
                     return monthArray[indexOfMonth]
+                }
+                function yearToShort(y){
+                    y = y.toString();
+                    return y = y.substring(2);
                 }
             }
             return timestamp()
