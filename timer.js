@@ -1,5 +1,6 @@
 (function($){
     DomReady.ready(function(){
+        //initialisation
         //wait until resize is over, then calculate new middle
         var resizeTimer; 
         $(window).on('resize', function(){
@@ -7,29 +8,33 @@
             resizeTimer = setTimeout(function() {
                 let pos = $(window).height()/2;
                 ids.forEach(function(h1) {
-                    let div = $("#"+h1+"");
-                    div.animateToPosition(pos, 1000);
+                    setTimeout(function(){
+                        let div = $("#"+h1+"");
+                        div.animateToPosition(pos, 1000);
+                    },300)
                 })
             }, 100);    
         })
 
+
        
         var ids = getIds();
+       
         ids.forEach(function(h1) {
             let div = $("#"+h1+"");
             div.animateToPosition($(window).height()/2, 2500);
         })
-        //counter and h1 updater interval function
-        setInterval(function(){
+        // counter and h1 updater interval function
+        setInterval(initialSettings,1000)
+        
+        function initialSettings(){
             ids.forEach(function(id){
                 let div = $("#"+id+"");
                 let OldVal = $("#"+id+"").find('h1').text();
                 //pass values to update h1 only if conditions has been met
                 div.updateValue(OldVal , dateAndTime.value(id));
             })
-        },1000)
-        
-
+        }
         
         var dateAndTime = {
             value: function(id){

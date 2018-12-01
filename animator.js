@@ -29,5 +29,6 @@ const animator = (function($){
             console.log(this.innerHeight());
         }
        
+       
     
 })(jQuery)
